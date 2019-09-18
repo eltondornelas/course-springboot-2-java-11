@@ -1,13 +1,18 @@
 package com.example.couse.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_user")
 public class User implements Serializable {
 	/*
 	 * CheckList:
@@ -29,7 +34,10 @@ public class User implements Serializable {
 	private String phone;
 	private String password;
 	
-	//ainda não tem associação
+	//Associação
+	@OneToMany(mappedBy = "client") //informa qual atributo do outro lado que está sendo mapeado
+	private List<Order> orders = new ArrayList<>();
+	//para coleção só coloca o get, não possui o set.
 	
 	public User() {
 		
@@ -83,6 +91,10 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
 
 	@Override
 	public int hashCode() {
@@ -107,6 +119,6 @@ public class User implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
+	}	
 	
 }
