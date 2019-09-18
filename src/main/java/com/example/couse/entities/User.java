@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_user")
 public class User implements Serializable {
@@ -35,6 +37,7 @@ public class User implements Serializable {
 	private String password;
 	
 	//Associação
+	@JsonIgnore //precisa colocar essa anotação aqui ou em order, para evitar o loop infinito
 	@OneToMany(mappedBy = "client") //informa qual atributo do outro lado que está sendo mapeado
 	private List<Order> orders = new ArrayList<>();
 	//para coleção só coloca o get, não possui o set.
