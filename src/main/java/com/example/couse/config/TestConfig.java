@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.example.couse.entities.Category;
 import com.example.couse.entities.Order;
+import com.example.couse.entities.OrderItem;
 import com.example.couse.entities.Product;
 import com.example.couse.entities.User;
 import com.example.couse.entities.enums.OrderStatus;
 import com.example.couse.repositories.CategoryRepository;
+import com.example.couse.repositories.OrderItemRepository;
 import com.example.couse.repositories.OrderRepository;
 import com.example.couse.repositories.ProductRepository;
 import com.example.couse.repositories.UserRepository;
@@ -36,11 +38,15 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
 		//tudo que colocar dentro desse método vai executar quando a aplicação for iniciada
-
+		//seeding...
+		
 		Category cat1 = new Category(null, "Electronics");
 		Category cat2 = new Category(null, "Books");
 		Category cat3 = new Category(null, "Computers");
@@ -75,7 +81,13 @@ public class TestConfig implements CommandLineRunner {
 		
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 	}
 	
 	
